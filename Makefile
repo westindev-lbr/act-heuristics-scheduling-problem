@@ -3,23 +3,42 @@ CXXFLAGS= -Wall -Wextra -Wpedantic -std=c++17
 LEAK= -fno-omit-frame-pointer -fno-optimize-sibling-calls -fsanitize=address -fsanitize=undefined
 
 PROG=heuristik
-VERSION= 0.1
-
-SRC= $(wildcard *.cpp)
-HSRC = *.hpp
-OBJ= $(SRC:.cpp=.o)
+VERSION=0.1
 
 
-all: $(PROG)
+SRCDIR= src
+INCDIR= include
+TESTDIR= tests
+BUILDDIR = build
 
-dev: 
-	$(CXX) $(CXXFLAGS) $(LEAK) -g $(SRC)
+SRC= $(wildcard $(SRCDIR)/*.cpp)
+HSRC= $(wildcard $(INCDIR)/*.hpp)
+OBJ= $(addprefix $(BUILDDIR)/,$(SRC:.cpp=.o))
+DEP = $(OBJ:.o=.d)
+
+
+all: $(BUILDDIR) $(PROG)
+
+dev: $(SRC)
+	$(CXX) $(CXXFLAGS) -g $^ -o bin/$(PROG)
+
+leak:
+	$(CXX) $(CXXFLAGS) $(LEAK) -g $(SRC) -o bin/$(PROG)
+
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
 $(PROG): $(OBJ)
-	$(CXX) $^ -o $@
+	$(CXX) $^ -o bin/$(PROG)
 
-%.o: %.cpp $(HSRC)
-	$(CXX) $(CXXFLAGS) -c $<
+$(OBJ): $(BUILDDIR)/%.o: %.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	@rm -f *.o *.out $(PROG)
+	@rm -rf $(BUILDDIR) *.o *.out bin/$(PROG)
+
+version:
+	@echo "$(PROG) version $(VERSION)"
+
+.PHONY: all dev leak clean test test_memory_leak version
