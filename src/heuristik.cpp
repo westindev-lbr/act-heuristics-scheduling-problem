@@ -1,5 +1,4 @@
-#include "heuristik.hpp"
-
+#include "../include/heuristik.hpp"
 #include <algorithm>
 #include <random>
 
