@@ -37,3 +37,6 @@
 
 *.pdf
 *.zip
+ 
+/bin
+/build
