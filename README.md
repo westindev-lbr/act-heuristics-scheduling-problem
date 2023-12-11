@@ -2,13 +2,13 @@
 
 ## Utilisation
 
-### *Compilation :*
+### *Compiler :*
 
 ```shell
 ❯ make all
 ```
 
-*Clean :*
+### *Clean :*
 
 ```shell
 ❯ make clean
@@ -17,24 +17,26 @@
 ### *Exécution :*
 
 ```shell
-❯ ./heuristik -f <file_name.txt> <mode>
+❯ cd bin
+❯ ./heuristik -f <../tests/SMTWP/file_name.txt> <mode>
 ```
 
 - -random : Solution aléatoire
 - -coef : Heuristique évaluation par coefficient
 - -sjf : Heuristique priorité + temps d'éxécution puis tri du reste des tâches par temps d'éxécution le plus court
 - -rpe : Heuristique tri par priorité desc puis tri asc par temps d'éxécution
+- -hillc : Recherche Hill-Climbing
 
 *Exemple :*
 
 ```shell
-❯ ./heuristik -f SMTWP/n100_15_b.txt -coef 
+❯ ./heuristik -f ../tests/SMTWP/n100_15_b.txt -hillc
 ```
 
 *Exemple 2 :*
 
 ```shell
-❯ ./heuristik -f SMTWP/n100_35_b.txt -random 
+❯ ./heuristik -f ../tests/SMTWP/n100_35_b.txt -random
 ````
 
 ```shell
@@ -49,4 +51,3 @@ ExecTime: 1, Priority: 8, Deadline: 1997, CompletionTime: 24, Delay : 0, Normali
 
  Somme Total des retards pondérés : 47629
 ```
-

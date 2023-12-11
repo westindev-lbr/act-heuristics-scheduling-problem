@@ -1,9 +1,9 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
-#include "task.hpp"
-#include "scheduler.hpp"
-#include "heuristik.hpp"
+#include "../include/task.hpp"
+#include "../include/scheduler.hpp"
+#include "../include/heuristik.hpp"
 
 template <typename T>
 void display( const std::vector<T>& vec ) {
