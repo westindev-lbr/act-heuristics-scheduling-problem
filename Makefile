@@ -10,6 +10,7 @@ SRCDIR= src
 INCDIR= include
 TESTDIR= tests
 BUILDDIR = build
+BINDIR= bin
 
 SRC= $(wildcard $(SRCDIR)/*.cpp)
 HSRC= $(wildcard $(INCDIR)/*.hpp)
@@ -17,7 +18,7 @@ OBJ= $(addprefix $(BUILDDIR)/,$(SRC:.cpp=.o))
 DEP = $(OBJ:.o=.d)
 
 
-all: $(BUILDDIR) $(PROG)
+all: $(BUILDDIR) $(BINDIR) $(PROG)
 
 dev: $(SRC)
 	$(CXX) $(CXXFLAGS) -g $^ -o bin/$(PROG)
@@ -28,6 +29,9 @@ leak:
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
 
+$(BINDIR):
+	mkdir -p $(BINDIR)
+
 $(PROG): $(OBJ)
 	$(CXX) $^ -o bin/$(PROG)
 
@@ -36,7 +40,7 @@ $(OBJ): $(BUILDDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(BUILDDIR) *.o *.out bin/$(PROG)
+	@rm -rf $(BUILDDIR) *.o *.out $(BINDIR)
 
 version:
 	@echo "$(PROG) version $(VERSION)"
