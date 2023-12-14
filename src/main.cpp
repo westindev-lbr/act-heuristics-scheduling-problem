@@ -5,6 +5,9 @@
 #include "../include/scheduler.hpp"
 #include "../include/heuristik.hpp"
 
+#define MAX_ITERATIONS 1000
+#define TEMPERATURE = 80.0
+
 template <typename T>
 void display( const std::vector<T>& vec ) {
     for ( const auto& it : vec ) {
@@ -25,6 +28,7 @@ int main( int argc, char* argv[] ) {
     bool shortest_job_first_mode = false;
     bool ratio_weight_exectime_mode = false;
     bool hillclimbing_mode = false;
+    bool ils_mode = false;
 
 
     for ( int i = 1; i < argc; i++ ) {
@@ -46,6 +50,9 @@ int main( int argc, char* argv[] ) {
         }
         else if ( std::string( argv[i] ) == "-hillc" ) {
             hillclimbing_mode = true;
+        }
+        else if ( std::string( argv[i] ) == "-ils" ) {
+            ils_mode = true;
         }
     }
 
@@ -92,11 +99,15 @@ int main( int argc, char* argv[] ) {
     else if ( shortest_job_first_mode ) {
         scheduler_task.ShortestJobFirstHeuristik(); // Priority + Exec + AscExec 265543
     }
-    else if ( ratio_prio_exectime_mode ) {
-        scheduler_task.SortByPriorityAndShortestExecTime(); // 268302
+    else if ( ratio_weight_exectime_mode ) {
+        scheduler_task.SortByWeightAndShortestExecTime(); // 268302
     }
     else if ( hillclimbing_mode ) {
         HillClimbing( scheduler_task );
+    }
+    else if ( ils_mode ) {
+        HillClimbing( scheduler_task );
+        iteratedLocalSearch( scheduler_task, MAX_ITERATIONS, TEMPERATURE );
     }
     else {
         std::cerr << "Aucune option valide spécifiée." << std::endl;
