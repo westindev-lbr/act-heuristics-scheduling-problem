@@ -1,0 +1,49 @@
+Test data : tests/SMTWP/n100_89_b.txt
+Résultats algorithme naïf (tri desc par poids puis tri asc par tps d'exécution) : 
+Somme Total des retards pondérés : 259385
+Ecart relatif par rapport à la solution optimale : 374.96%
+Le temps d'éxécution est de 0.000039 secondes
+--------------------------------
+
+Test data : tests/SMTWP/n100_89_b.txt
+Résultats algorithme random : 
+Somme Total des retards pondérés : 558942
+Ecart relatif par rapport à la solution optimale : 923.478%
+Le temps d'éxécution est de 0.000013 secondes
+--------------------------------
+
+Test data : tests/SMTWP/n100_89_b.txt
+Résultats algorithme shortest_job_first : 
+Somme Total des retards pondérés : 280481
+Ecart relatif par rapport à la solution optimale : 413.589%
+Le temps d'éxécution est de 0.000025 secondes
+--------------------------------
+
+Test data : tests/SMTWP/n100_89_b.txt
+Résultats algorithme coefficient de critères : 
+Somme Total des retards pondérés : 174745
+Ecart relatif par rapport à la solution optimale : 219.975%
+Le temps d'éxécution est de 0.000046 secondes
+--------------------------------
+
+Test data : tests/SMTWP/n100_89_b.txt
+Résultats algorithme HillClimbing(SwapTask) : 
+Somme Total des retards pondérés : 58317
+Ecart relatif par rapport à la solution optimale : 6.78422%
+Le temps d'éxécution est de 0.069234 secondes
+--------------------------------
+
+Test data : tests/SMTWP/n100_89_b.txt
+Résultats algorithme ILS : 
+Somme Total des retards pondérés : 56136
+Ecart relatif par rapport à la solution optimale : 2.7906%
+Le temps d'éxécution est de 94.268875 secondes
+--------------------------------
+
+Test data : tests/SMTWP/n100_89_b.txt
+Résultats algorithme HillClimbing(SwapTask) : 
+Somme Total des retards pondérés : 58317
+Ecart relatif par rapport à la solution optimale : 6.78422%
+Le temps d'éxécution est de 0.083674 secondes
+--------------------------------
+
