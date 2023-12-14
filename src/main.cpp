@@ -88,42 +88,68 @@ int main( int argc, char* argv[] ) {
         scheduler_task.AddTaskInSchedule( current_task );
     }
 
+    clock_t td, ta, tf;
+
     if ( random_mode ) {
+        td = clock();
         scheduler_task.randomizeSchedule();
-        scheduler_task.SortByWeightAndShortestExecTime(); // 268302
-    }
-    else if ( coef_mode ) {
-        scheduler_task.NormalizeTaskProperties();
-        scheduler_task.SortByWeightOfCriteria();
-    }
-    else if ( shortest_job_first_mode ) {
-        scheduler_task.ShortestJobFirstHeuristik(); // Priority + Exec + AscExec 265543
+        ta=clock();
+        tf = ta - td;
+        std::cout << "Résultats algorithme random : " << std::endl;
     }
     else if ( ratio_weight_exectime_mode ) {
+        td = clock();
         scheduler_task.SortByWeightAndShortestExecTime(); // 268302
+        ta=clock();
+        tf = ta - td;
+        std::cout << "Résultats algorithme naïf (tri desc par poids puis tri asc par tps d'exécution) : " << std::endl;
+    }
+    else if ( coef_mode ) {
+        td = clock();
+        scheduler_task.NormalizeTaskProperties();
+        scheduler_task.SortByWeightOfCriteria();
+        ta=clock();
+        tf = ta - td;
+        std::cout << "Résultats algorithme coefficient de critères : " << std::endl;
+    }
+    else if ( shortest_job_first_mode ) {
+        td = clock();
+        scheduler_task.ShortestJobFirstHeuristik(); // Priority + Exec + AscExec 265543
+        ta=clock();
+        tf = ta - td;
+        std::cout << "Résultats algorithme shortest_job_first : " << std::endl;
     }
     else if ( hillclimbing_mode ) {
+        td = clock();
         HillClimbing( scheduler_task );
+        ta=clock();
+        tf = ta - td;
+        std::cout << "Résultats algorithme HillClimbing(SwapTask) : " << std::endl;
     }
     else if ( ils_mode ) {
+        td = clock();
         HillClimbing( scheduler_task );
         iteratedLocalSearch( scheduler_task, MAX_ITERATIONS, TEMPERATURE );
+        ta=clock();
+        tf = ta - td;
+        std::cout << "Résultats algorithme ILS : " << std::endl;
+
     }
     else {
         std::cerr << "Aucune option valide spécifiée." << std::endl;
         return EXIT_FAILURE;
     }
-    // scheduler_task.SortByExecTime(); // 874128
-    // scheduler_task.SortByPriorityDesc(); // 286436
-    // scheduler_task.SortByDeadLineDesc(); // 518709
-    // scheduler_task.SortByDeadLineAsc(); // 503762
-    // scheduler_task.SortByExecTimeAsc(); // 300416
 
 
     int result = ComputeDelayFromScheduler( scheduler_task );
-    display( scheduler_task.GetSchedule() );
-    // std::cout << "\n Temps de retard : " << scheduler_task.GetSumOfWeightedDelay() << std::endl;
-    std::cout << "\n Somme Total des retards pondérés : " << result << std::endl;
 
+    int val_optimale = 54612;
+    std::cout << "Somme Total des retards pondérés : "
+        << result << std::endl;
+    std::cout << "Ecart relatif par rapport à la solution optimale : "
+        << ( ( static_cast<double>(result) - val_optimale ) / val_optimale ) * 100.0 << "%" << std::endl;
+    std::cout << "Le temps d'éxécution est de "
+        << std::fixed << std::setprecision( 6 ) << ( ( float ) tf ) / CLOCKS_PER_SEC << " secondes" << std::endl;
+    std::cout << "--------------------------------\n"<< std::endl; 
     return 0;
 }

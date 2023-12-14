@@ -124,6 +124,7 @@ void SchedulerTask::MoveTasks( int rIndex1, int rIndex2 ) {
 }
 
 
+void SchedulerTask::ShortestJobFirstHeuristik() {
     // Tri par priorité puis plus petit temps d'éxécution
     this->SortByWeightAndShortestExecTime();
     bool hasSortedRemainedTask = false;
