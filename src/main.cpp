@@ -6,7 +6,7 @@
 #include "../include/heuristik.hpp"
 
 #define MAX_ITERATIONS 1000
-#define TEMPERATURE = 80.0
+#define TEMPERATURE 80.0
 
 template <typename T>
 void display( const std::vector<T>& vec ) {
