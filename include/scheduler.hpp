@@ -38,11 +38,12 @@ public:
     void randomizeSchedule();
 
     // Heuristiques de tri
-    void SortByPriorityDesc();
+    void SortByWeightDesc();
     void SortByDeadLineAsc();
     void SortByExecTimeDesc();
     void SortByExecTimeAsc();
-    void SortByPriorityAndShortestExecTime();
+    void SortByWeightAndShortestExecTime();
+    // Heuristiques constructives
     void SortByWeightOfCriteria();
     void SortRemainingTasksByExecTime( int rCurrentIndex );
     // Fonction pour échanger deux tâches dans la séquence

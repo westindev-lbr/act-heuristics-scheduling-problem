@@ -23,7 +23,7 @@ int main( int argc, char* argv[] ) {
     bool random_mode = false;
     bool coef_mode = false;
     bool shortest_job_first_mode = false;
-    bool ratio_prio_exectime_mode = false;
+    bool ratio_weight_exectime_mode = false;
     bool hillclimbing_mode = false;
 
 
@@ -35,16 +35,16 @@ int main( int argc, char* argv[] ) {
         else if ( std::string( argv[i] ) == "-random" ) {
             random_mode = true;
         }
+        else if ( std::string( argv[i] ) == "-naif" ) {
+            ratio_weight_exectime_mode = true;
+        }
         else if ( std::string( argv[i] ) == "-coef" ) {
             coef_mode = true;
         }
         else if ( std::string( argv[i] ) == "-sjf" ) {
             shortest_job_first_mode = true;
         }
-        else if ( std::string( argv[i] ) == "-rpe" ) {
-            ratio_prio_exectime_mode = true;
-        }
-        else if ( std::string( argv[i] ) == "-hc" ) {
+        else if ( std::string( argv[i] ) == "-hillc" ) {
             hillclimbing_mode = true;
         }
     }
@@ -83,6 +83,7 @@ int main( int argc, char* argv[] ) {
 
     if ( random_mode ) {
         scheduler_task.randomizeSchedule();
+        scheduler_task.SortByWeightAndShortestExecTime(); // 268302
     }
     else if ( coef_mode ) {
         scheduler_task.NormalizeTaskProperties();
@@ -95,7 +96,7 @@ int main( int argc, char* argv[] ) {
         scheduler_task.SortByPriorityAndShortestExecTime(); // 268302
     }
     else if ( hillclimbing_mode ) {
-        HillClimbing(scheduler_task);
+        HillClimbing( scheduler_task );
     }
     else {
         std::cerr << "Aucune option valide spécifiée." << std::endl;

@@ -4,30 +4,30 @@
 #include <iostream>
 
 #define COEF_EXTIME 0.430
-#define COEF_PRIORITY 0.505
+#define COEF_WEIGHT 0.505
 #define COEF_DEADLINE 0.065
 
 // Classe Tâche
 class Task {
 private:
     int mExecutionTime;
-    int mPriority;
+    int mWeight;
     int mDeadline;
     int mCompletionTime;
     int mDelay;
     double mNormalizedExecTime;
-    double mNormalizedPriority;
+    double mNormalizedWeight;
     double mNormalizedDeadline;
 public:
-    Task( int rExecTime, int rPriority, int rDeadLine );
+    Task( int rExecTime, int rWeight, int rDeadLine );
 
     // Getters
     int GetWeightedDelay() const;
     int GetExecTime() const;
-    int GetPriority() const;
+    int GetWeight() const;
     int GetDeadline() const;
     double GetNormalizedExecTime() const;
-    double GetNormalizedPriority() const;
+    double GetNormalizedWeight() const;
     double GetNormalizedDeadline() const;
 
     // Setters

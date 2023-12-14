@@ -19,7 +19,7 @@ int SchedulerTask::GetSumOfWeightedDelay()  const {
 int SchedulerTask::GetNbTasks()             const {
     return this->mNbTasks;
 }
-const std::vector<Task>& 
+const std::vector<Task>&
 SchedulerTask::GetSchedule()                const {
     return this->mTasks;
 }
@@ -69,9 +69,9 @@ void SchedulerTask::NormalizeTaskProperties() {
     double maxExecTimeValue = static_cast< double >( this->mTasks[this->mNbTasks - 1].GetExecTime() );
 
     // Tri par priorité descendant pour trouver les valeurs min et max
-    this->SortByPriorityDesc();
-    double minPriorityValue = static_cast< double >( this->mTasks[this->mNbTasks - 1].GetPriority() );
-    double maxPriorityValue = static_cast< double >( this->mTasks[0].GetPriority() );
+    this->SortByWeightDesc();
+    double minWeightValue = static_cast< double >( this->mTasks[this->mNbTasks - 1].GetWeight() );
+    double maxWeightValue = static_cast< double >( this->mTasks[0].GetWeight() );
 
     // Tri par date limite ascendante pour trouver les valeurs min et max
     this->SortByDeadLineAsc();
@@ -81,7 +81,7 @@ void SchedulerTask::NormalizeTaskProperties() {
     for ( auto& task : this->mTasks ) {
         // Inversion de la normalisation du temps d'éxécution afin que les valeurs plus petites offrent un meilleur score
         double ne = 1.0 - ( static_cast< double >( task.GetExecTime() ) - minExecTimeValue ) / ( maxExecTimeValue - minExecTimeValue );
-        double np = ( static_cast< double >( task.GetPriority() ) - minPriorityValue ) / ( maxPriorityValue - minPriorityValue );
+        double np = ( static_cast< double >( task.GetWeight() ) - minWeightValue ) / ( maxWeightValue - minWeightValue );
         // Inversion de la normalisation de la deadline afin que les valeurs plus petites offrent un meilleur score
         double nd = 1.0 - ( static_cast< double >( task.GetDeadline() ) - minDeadLine ) / ( maxDeadLine - minDeadLine );
         task.SetNormalizedProperties( ne, np, nd );
@@ -100,7 +100,7 @@ void SchedulerTask::SwapTasks( int rIndex1, int rIndex2 ) {
 
 void  SchedulerTask::ShortestJobFirstHeuristik() {
     // Tri par priorité puis plus petit temps d'éxécution
-    this->SortByPriorityAndShortestExecTime();
+    this->SortByWeightAndShortestExecTime();
     bool hasSortedRemainedTask = false;
 
     int index = 0;
@@ -112,7 +112,7 @@ void  SchedulerTask::ShortestJobFirstHeuristik() {
         // Si retard changer de stratégie en triant le reste des tâches par temps d'éxécution uniquement
         if ( it.GetWeightedDelay() > 0 && !hasSortedRemainedTask ) {
             this->SortRemainingTasksByExecTime( index + 1 );
-            std::cout << "Last task before delay : " << it << "\n" << std::endl;
+            // std::cout << "Last task before delay : " << it << "\n" << std::endl;
             hasSortedRemainedTask = true;
         }
         index++;
@@ -126,14 +126,14 @@ void SchedulerTask::SortByExecTimeDesc() {
 void SchedulerTask::SortByExecTimeAsc() {
     std::sort( this->mTasks.begin(), this->mTasks.end(), AscSortByExecTime() );
 }
-void SchedulerTask::SortByPriorityDesc() {
-    std::sort( this->mTasks.begin(), this->mTasks.end(), DescSortByPriority() );
+void SchedulerTask::SortByWeightDesc() {
+    std::sort( this->mTasks.begin(), this->mTasks.end(), DescSortByWeight() );
 }
 void SchedulerTask::SortByDeadLineAsc() {
     std::sort( this->mTasks.begin(), this->mTasks.end(), AscSortByDeadLine() );
 }
-void SchedulerTask::SortByPriorityAndShortestExecTime() {
-    std::sort( this->mTasks.begin(), this->mTasks.end(), DescSortByPriorityAndShortestExecTime() );
+void SchedulerTask::SortByWeightAndShortestExecTime() {
+    std::sort( this->mTasks.begin(), this->mTasks.end(), DescSortByWeightAndShortestExecTime() );
 }
 
 void SchedulerTask::SortByWeightOfCriteria() {

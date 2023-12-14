@@ -2,12 +2,12 @@
 
 std::ostream& operator<<( std::ostream& os, const Task& task ) {
     os << "ExecTime: " << task.mExecutionTime
-        << ", Priority: " << task.mPriority
+        << ", Priority: " << task.mWeight
         << ", Deadline: " << task.mDeadline
         << ", CompletionTime: " << task.mCompletionTime
         << ", Delay : " << task.mDelay
         << ", NormalizedExecTime : " << task.mNormalizedExecTime
-        << ", NormalizedPriority : " << task.mNormalizedPriority
+        << ", NormalizedPriority : " << task.mNormalizedWeight
         << ", NormalizedDeadline : " << task.mNormalizedDeadline;
     return os;
 }
@@ -20,12 +20,12 @@ std::ostream& operator<<( std::ostream& os, const Task& task ) {
 */
 Task::Task( int rExecTime, int rPriority, int rDeadLine ) {
     this->mExecutionTime = rExecTime;
-    this->mPriority = rPriority;
+    this->mWeight = rPriority;
     this->mDeadline = rDeadLine;
     this->mCompletionTime = 0;
     this->mDelay = 0;
     this->mNormalizedExecTime = 0.0;
-    this->mNormalizedPriority = 0.0;
+    this->mNormalizedWeight = 0.0;
     this->mNormalizedDeadline = 0.0;
 }
 
@@ -36,8 +36,8 @@ int Task::GetWeightedDelay() const {
 int Task::GetExecTime() const {
     return this->mExecutionTime;
 }
-int Task::GetPriority() const {
-    return this->mPriority;
+int Task::GetWeight() const {
+    return this->mWeight;
 }
 int Task::GetDeadline() const {
     return this->mDeadline;
@@ -46,8 +46,8 @@ int Task::GetDeadline() const {
 double Task::GetNormalizedExecTime() const {
     return this->mNormalizedExecTime;
 }
-double Task::GetNormalizedPriority() const {
-    return this->mNormalizedPriority;
+double Task::GetNormalizedWeight() const {
+    return this->mNormalizedWeight;
 }
 double Task::GetNormalizedDeadline() const {
     return this->mNormalizedDeadline;
@@ -59,11 +59,11 @@ void Task::SetCompletionTime( int rTime ) {
 }
 
 void Task::ComputeWeightedDelay() {
-    this->mDelay = std::max( this->mCompletionTime - this->mDeadline, 0 ) * this->mPriority;
+    this->mDelay = std::max( this->mCompletionTime - this->mDeadline, 0 ) * this->mWeight;
 }
 
 void Task::SetNormalizedProperties( double rNe, double rNp, double rNd ) {
     this->mNormalizedExecTime = rNe;
-    this->mNormalizedPriority = rNp;
+    this->mNormalizedWeight = rNp;
     this->mNormalizedDeadline = rNd;
 }
