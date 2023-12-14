@@ -45,8 +45,10 @@ public:
     void SortByPriorityAndShortestExecTime();
     void SortByWeightOfCriteria();
     void SortRemainingTasksByExecTime( int rCurrentIndex );
-    // Fonction pour échanger deux tâches dans la séquence
-    void SwapTasks(int index1, int index2);
+    // Perturbations
+    void SwapTasks(int rIndex1, int rIndex2);
+    void InvertSequence(int rIndex1, int rIndex2);
+    void MoveTasks(int rIndex1, int rIndex2);
 };
 
 #endif /* SCHEDULER_HPP */

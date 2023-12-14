@@ -21,11 +21,14 @@
 ❯ ./heuristik -f <../tests/SMTWP/file_name.txt> <mode>
 ```
 
+__Liste des modes :__
+
 - -random : Solution aléatoire
 - -coef : Heuristique évaluation par coefficient
 - -sjf : Heuristique priorité + temps d'éxécution puis tri du reste des tâches par temps d'éxécution le plus court
 - -rpe : Heuristique tri par priorité desc puis tri asc par temps d'éxécution
 - -hillc : Recherche Hill-Climbing
+- ils : Recherche Locale itérée
 
 *Exemple :*
 

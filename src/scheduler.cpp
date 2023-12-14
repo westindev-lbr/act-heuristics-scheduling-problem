@@ -98,7 +98,32 @@ void SchedulerTask::SwapTasks( int rIndex1, int rIndex2 ) {
     }
 }
 
-void  SchedulerTask::ShortestJobFirstHeuristik() {
+// Fonction pour inverser la séquence entre deux indices
+void SchedulerTask::InvertSequence( int rIndex1, int rIndex2 ) {
+    if ( rIndex1 >= 0 && rIndex1 < this->mNbTasks && rIndex2 >= 0 && rIndex2 < this->mNbTasks ) {
+        while ( rIndex1 < rIndex2 ) {
+            std::swap( this->mTasks[rIndex1], this->mTasks[rIndex2] );
+            rIndex1++;
+            rIndex2--;
+        }
+    }
+    else {
+        std::cerr << "Indices de tâches invalides pour l'inversion." << std::endl;
+    }
+}
+
+void SchedulerTask::MoveTasks( int rIndex1, int rIndex2 ) {
+    if ( rIndex1 >= 0 && rIndex1 < this->mNbTasks && rIndex2 >= 0 && rIndex2 < this->mNbTasks ) {
+        Task taskToMove = mTasks[rIndex1];
+        mTasks.erase( mTasks.begin() + rIndex1 );
+        mTasks.insert( mTasks.begin() + rIndex2, taskToMove );
+    }
+    else {
+        std::cerr << "Indices de tâches invalides pour le déplacement." << std::endl;
+    }
+}
+
+
     // Tri par priorité puis plus petit temps d'éxécution
     this->SortByPriorityAndShortestExecTime();
     bool hasSortedRemainedTask = false;

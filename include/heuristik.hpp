@@ -53,5 +53,9 @@ struct AscSortByWeightOfCriteria {
 
 int ComputeDelayFromScheduler( SchedulerTask& rScheduler );
 void HillClimbing(SchedulerTask& initialNode);
+void perturbation( SchedulerTask& scheduler );
+bool IsAnAcceptanceCriterion( int rCurrentDelay, int rNewDelay, double rTemperature );
+double UpdateTemperature(double rCurrentTemperature, int rIterations);
+void iteratedLocalSearch( SchedulerTask& initialNode, int rMaxIterations, double rInitialTemperature );
 
 #endif /* HEURISTIK_HPP */

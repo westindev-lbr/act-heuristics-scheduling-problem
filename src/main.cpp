@@ -47,6 +47,9 @@ int main( int argc, char* argv[] ) {
         else if ( std::string( argv[i] ) == "-hc" ) {
             hillclimbing_mode = true;
         }
+        else if ( std::string( argv[i] ) == "-ils" ) {
+            ils_mode = true;
+        }
     }
 
     if ( !file_name.empty() ) {
@@ -95,7 +98,12 @@ int main( int argc, char* argv[] ) {
         scheduler_task.SortByPriorityAndShortestExecTime(); // 268302
     }
     else if ( hillclimbing_mode ) {
+        HillClimbing( scheduler_task );
         HillClimbing(scheduler_task);
+    else if ( ils_mode ) {
+        HillClimbing( scheduler_task );
+        iteratedLocalSearch( scheduler_task, MAX_ITERATIONS, TEMPERATURE );
+
     }
     else {
         std::cerr << "Aucune option valide spécifiée." << std::endl;
